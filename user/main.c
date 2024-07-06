@@ -56,6 +56,7 @@ int main() {
 
   // TIM0_Init(90, 100); // 10khz
 
+  // only in test
   while (1) {
     //
   }
