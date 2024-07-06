@@ -87,11 +87,11 @@
                         <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.2142312935" name="C2000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334">
                             <option id="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH.1908008578" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH" valueType="includePath">
                                 <listOptionValue value="${PROJECT_ROOT}"/>
-                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/SPWM/app/ina238"/>
-                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/SPWM/app/iic"/>
-                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/SPWM/app/timer"/>
-                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/SPWM/app/epwm"/>
-                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/SPWM/app/spwm"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/ina238"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/iic"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/timer"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/epwm"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/spwm"/>
                                 <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/headers/include"/>
                                 <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/common/include"/>
                                 <listOptionValue value="${CG_TOOL_ROOT}/include"/>
@@ -101,6 +101,28 @@
                             </option>
                         </tool>
                     </fileInfo>
+                    <folderInfo id="com.ti.ccstudio.buildDefinitions.C2000.Debug.70254112.Debug" name="Debug" resourcePath="Debug">
+                        <toolChain id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.DebugToolchain.20358305" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.DebugToolchain" unusedChildren="">
+                            <option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1384605826.1898486866" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1384605826"/>
+                            <option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.1640237584.1118549080" name="Compiler version" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.1640237584"/>
+                            <targetPlatform id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.targetPlatformDebug" name="Platform" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.targetPlatformDebug"/>
+                            <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.1188651417" name="C2000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334">
+                                <option id="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH.997616848" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH" valueType="includePath">
+                                    <listOptionValue value="${PROJECT_ROOT}"/>
+                                    <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/ina238"/>
+                                    <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/iic"/>
+                                    <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/timer"/>
+                                    <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/epwm"/>
+                                    <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/spwm"/>
+                                    <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/headers/include"/>
+                                    <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/common/include"/>
+                                    <listOptionValue value="${CG_TOOL_ROOT}/include"/>
+                                </option>
+                            </tool>
+                            <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.linkerDebug.304868051" name="C2000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.linkerDebug.842079441"/>
+                            <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.hex.1660590340" name="C2000 Hex Utility" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.hex.1464703843"/>
+                        </toolChain>
+                    </folderInfo>
                 </configuration>
             </storageModule>
             <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>

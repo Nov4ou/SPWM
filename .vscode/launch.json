@@ -14,6 +14,12 @@
             "type": "ccs-debug",
             "request": "launch",
             "project": "ePWM"
+        },
+        {
+            "name": "SPWM",
+            "type": "ccs-debug",
+            "request": "launch",
+            "project": "SPWM"
         }
     ]
 }
