@@ -143,7 +143,7 @@ epwm5_timer_isr(void)
     static const float step = 2 * PI * SINE_FREQ / PWM_FREQ;
 
     // Calculate the current sine wave value
-    sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index)));
+    sineValue = (Uint16)(MAX_CMPA * sin(step * index));
 
     // Update the duty cycle with the sine wave value
     EPwm5Regs.CMPA.half.CMPA = sineValue;
