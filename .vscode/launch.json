@@ -20,6 +20,12 @@
             "type": "ccs-debug",
             "request": "launch",
             "project": "SPWM"
+        },
+        {
+            "name": "ADC",
+            "type": "ccs-debug",
+            "request": "launch",
+            "project": "ADC"
         }
     ]
 }

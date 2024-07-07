@@ -50,8 +50,8 @@ void EPWM1_Init(Uint16 tbprd)
     EPwm1Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
     EPwm1Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
     EPwm1Regs.DBCTL.bit.IN_MODE = DBA_ALL;
-    EPwm1Regs.DBRED = 10;
-    EPwm1Regs.DBFED = 10;
+    EPwm1Regs.DBRED = 5;
+    EPwm1Regs.DBFED = 5;
 
     EPwm1Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;     // Select INT on Zero event
     EPwm1Regs.ETSEL.bit.INTEN = 1;  // Enable INT
