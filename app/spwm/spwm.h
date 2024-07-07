@@ -17,6 +17,8 @@
 // #define SINE_FREQ 34
 #define MAX_CMPA 4500  // Maximum value for CMPA, should be same as TBPRD
 #define PI 3.14159265358979
+#define DEAD_BAND 30
+
 
 void InitPWM5();
 void InitPWM6();
