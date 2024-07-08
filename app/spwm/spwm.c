@@ -13,6 +13,11 @@ Uint32  EPwm6TimerIntCount = 0;
 Uint16 sineValue = 0;
 Uint16 sineValue2 = 0;
 
+Uint8 deadBandA1 = 80;
+Uint8 deadBandA2 = 80;
+Uint8 deadBandB1 = 80;
+Uint8 deadBandB2 = 80;
+
 void InitPWM5()
 {
     EALLOW;
@@ -58,8 +63,8 @@ void InitPWM5()
     EPwm5Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
     EPwm5Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
     EPwm5Regs.DBCTL.bit.IN_MODE = DBA_ALL;
-    EPwm5Regs.DBRED = DEAD_BAND;
-    EPwm5Regs.DBFED = DEAD_BAND;
+    EPwm5Regs.DBRED = deadBandA1;
+    EPwm5Regs.DBFED = deadBandA2;
 
     EPwm5Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;     // Select INT on Zero event
     EPwm5Regs.ETSEL.bit.INTEN = 1;  // Enable INT
@@ -115,8 +120,8 @@ void InitPWM6()
     EPwm6Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
     EPwm6Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
     EPwm6Regs.DBCTL.bit.IN_MODE = DBA_ALL;
-    EPwm6Regs.DBRED = DEAD_BAND;
-    EPwm6Regs.DBFED = DEAD_BAND;
+    EPwm6Regs.DBRED = deadBandB1;
+    EPwm6Regs.DBFED = deadBandB2;
 
     EPwm6Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;     // Select INT on Zero event
     EPwm6Regs.ETSEL.bit.INTEN = 1;  // Enable INT

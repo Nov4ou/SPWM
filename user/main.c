@@ -14,6 +14,11 @@
 #include "stdio.h"
 #include "timer.h"
 
+extern Uint8 deadBandA1;
+extern Uint8 deadBandA2;
+extern Uint8 deadBandB1;
+extern Uint8 deadBandB2;
+
 void LED_Init(void) {
   EALLOW;
   //    SysCtrlRegs.PCLKCR3.bit.GPIOINENCLK = 1;
@@ -58,5 +63,9 @@ int main() {
 
   while (1) {
     //
+    EPwm5Regs.DBRED = deadBandA1;
+    EPwm5Regs.DBFED = deadBandA2;
+    EPwm6Regs.DBRED = deadBandB1;
+    EPwm6Regs.DBFED = deadBandB2;
   }
 }
