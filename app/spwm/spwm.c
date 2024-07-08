@@ -18,6 +18,8 @@ Uint8 deadBandA2 = 80;
 Uint8 deadBandB1 = 80;
 Uint8 deadBandB2 = 80;
 
+float sinAmp = 0.5;
+
 void InitPWM5()
 {
     EALLOW;
@@ -132,14 +134,6 @@ void InitPWM6()
     EDIS;
 }
 
-interrupt void TIM0_IRQn(void)
-{
-    EALLOW;
-    
-    PieCtrlRegs.PIEACK.bit.ACK1 = 1;
-    EDIS;
-}
-
 __interrupt void
 epwm5_timer_isr(void)
 {
@@ -148,9 +142,9 @@ epwm5_timer_isr(void)
     static const float step = 2 * PI * SINE_FREQ / PWM_FREQ;
 
     // Calculate the current sine wave value
-    sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index) * 1));
+    sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index) * sinAmp));
 
-    sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * 1));
+    sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
 
     // Update the duty cycle with the sine wave value
     EPwm5Regs.CMPA.half.CMPA = sineValue;

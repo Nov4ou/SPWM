@@ -7,6 +7,7 @@
 #include "F2806x_Device.h"   // F2806x Headerfile
 #include "F2806x_Examples.h" // F2806x Examples Headerfile
 #include "epwm.h"
+#include "adc.h"
 #include "ina238.h"
 #include "math.h"
 #include "spwm.h"
@@ -18,6 +19,17 @@ extern Uint8 deadBandA1;
 extern Uint8 deadBandA2;
 extern Uint8 deadBandB1;
 extern Uint8 deadBandB2;
+
+typedef struct {
+  float kp, ki, kd;
+  float error, lastError, prevError;
+  float integral, maxIntegral;
+  float output, maxOutput;
+} PID;
+PID currentLoop;
+
+void PID_Init(PID *pid, float p, float i, float d, float maxI, float maxOut);
+void PID_Calc(PID *pid, float reference, float feedback);
 
 void LED_Init(void) {
   EALLOW;
@@ -59,7 +71,7 @@ int main() {
   EINT; // Enable Global interrupt INTM
   ERTM; // Enable Global realtime interrupt DBGM
 
-  // TIM0_Init(90, 100); // 10khz
+  TIM0_Init(90, 100); // 10khz
 
   while (1) {
     //
@@ -68,4 +80,43 @@ int main() {
     EPwm6Regs.DBRED = deadBandB1;
     EPwm6Regs.DBFED = deadBandB2;
   }
+}
+
+void PID_Init(PID *pid, float p, float i, float d, float maxI, float maxOut) {
+  pid->kp = p;
+  pid->ki = i;
+  pid->kd = d;
+  pid->maxIntegral = maxI;
+  pid->maxOutput = maxOut;
+  pid->error = 0;
+  pid->lastError = 0;
+  pid->integral = 0;
+  pid->output = 0;
+}
+
+void PID_Calc(PID *pid, float reference, float feedback) {
+  pid->lastError = pid->error;
+  pid->error = reference - feedback;
+  float dout = (pid->error - pid->lastError) * pid->kd;
+  float pout = pid->error * pid->kp;
+  pid->integral += pid->error * pid->ki;
+  if (pid->integral > pid->maxIntegral)
+    pid->integral = pid->maxIntegral;
+  else if (pid->integral < -pid->maxIntegral)
+    pid->integral = -pid->maxIntegral;
+  pid->output = pout + dout + pid->integral;
+  if (pid->output > pid->maxOutput)
+    pid->output = pid->maxOutput;
+  else if (pid->output < -pid->maxOutput)
+    pid->output = -pid->maxOutput;
+}
+
+interrupt void TIM0_IRQn(void)
+{
+    EALLOW;
+
+     
+
+    PieCtrlRegs.PIEACK.bit.ACK1 = 1;
+    EDIS;
 }
