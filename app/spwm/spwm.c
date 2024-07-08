@@ -171,8 +171,8 @@ void InitPWM7() {
   EPwm7Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
   EPwm7Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
   EPwm7Regs.DBCTL.bit.IN_MODE = DBA_ALL;
-  EPwm7Regs.DBRED = 10;
-  EPwm7Regs.DBFED = 10;
+  EPwm7Regs.DBRED = 50;
+  EPwm7Regs.DBFED = 50;
 
   EPwm7Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO; // Select INT on Zero event
   EPwm7Regs.ETSEL.bit.INTEN = 1;            // Enable INT
@@ -227,8 +227,8 @@ void InitPWM8() {
   EPwm8Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
   EPwm8Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
   EPwm8Regs.DBCTL.bit.IN_MODE = DBA_ALL;
-  EPwm8Regs.DBRED = 10;
-  EPwm8Regs.DBFED = 10;
+  EPwm8Regs.DBRED = 50;
+  EPwm8Regs.DBFED = 50;
 
   EPwm8Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO; // Select INT on Zero event
   EPwm8Regs.ETSEL.bit.INTEN = 1;            // Enable INT
