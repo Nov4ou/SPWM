@@ -148,10 +148,14 @@ epwm5_timer_isr(void)
     static const float step = 2 * PI * SINE_FREQ / PWM_FREQ;
 
     // Calculate the current sine wave value
-    sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index)));
+    sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index) * 1));
+
+    sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * 1));
 
     // Update the duty cycle with the sine wave value
     EPwm5Regs.CMPA.half.CMPA = sineValue;
+
+    EPwm6Regs.CMPA.half.CMPA = sineValue2;
 
     // Increment the index and wrap around if necessary
     index++;
@@ -172,36 +176,36 @@ epwm5_timer_isr(void)
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 }
 
-__interrupt void
-epwm6_timer_isr(void)
-{
-    EPwm6TimerIntCount++;
-    static Uint16 index2 = 0;
-    static const float step2 = 2 * PI * SINE_FREQ / PWM_FREQ;
+// __interrupt void
+// epwm6_timer_isr(void)
+// {
+//     EPwm6TimerIntCount++;
+//     static Uint16 index2 = 0;
+//     static const float step2 = 2 * PI * SINE_FREQ / PWM_FREQ;
 
-    // Calculate the current sine wave value
-    sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step2 * index2)));
+//     // Calculate the current sine wave value
+//     sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step2 * index2)));
 
-    // Update the duty cycle with the sine wave value
-    EPwm6Regs.CMPA.half.CMPA = sineValue2;
+//     // Update the duty cycle with the sine wave value
+//     EPwm6Regs.CMPA.half.CMPA = sineValue2;
 
-    // Increment the index and wrap around if necessary
-    index2++;
-    if (index2 >= (PWM_FREQ / SINE_FREQ))
-    {
-        index2 = 0;
-    }
+//     // Increment the index and wrap around if necessary
+//     index2++;
+//     if (index2 >= (PWM_FREQ / SINE_FREQ))
+//     {
+//         index2 = 0;
+//     }
 
 
-    //
-    // Clear INT flag for this timer
-    //
-    EPwm6Regs.ETCLR.bit.INT = 1;
+//     //
+//     // Clear INT flag for this timer
+//     //
+//     EPwm6Regs.ETCLR.bit.INT = 1;
 
-    //
-    // Acknowledge this interrupt to receive more interrupts from group 3
-    //
-    PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
-}
+//     //
+//     // Acknowledge this interrupt to receive more interrupts from group 3
+//     //
+//     PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+// }
 
 
