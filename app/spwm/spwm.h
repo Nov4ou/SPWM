@@ -20,7 +20,11 @@
 
 void InitPWM5();
 void InitPWM6();
+void InitPWM7();
+void InitPWM8();
 __interrupt void epwm5_timer_isr(void);
 __interrupt void epwm6_timer_isr(void);
+__interrupt void epwm7_timer_isr(void);
+__interrupt void epwm8_timer_isr(void);
 
 #endif /* APP_SPWM_SPWM_H_ */
