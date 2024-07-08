@@ -42,8 +42,8 @@ int main() {
   EALLOW;
   PieVectTable.EPWM5_INT = &epwm5_timer_isr;
   PieVectTable.EPWM6_INT = &epwm6_timer_isr;
-  // PieVectTable.EPWM6_INT = &epwm7_timer_isr;
-  // PieVectTable.EPWM6_INT = &epwm8_timer_isr;
+  PieVectTable.EPWM7_INT = &epwm7_timer_isr;
+  PieVectTable.EPWM8_INT = &epwm8_timer_isr;
   EDIS;
 
   // InitEPwmTimer();
@@ -55,8 +55,8 @@ int main() {
   IER |= M_INT3;
   PieCtrlRegs.PIEIER3.bit.INTx5 = 1;
   PieCtrlRegs.PIEIER3.bit.INTx6 = 1;
-  // PieCtrlRegs.PIEIER3.bit.INTx7 = 1;
-  // PieCtrlRegs.PIEIER3.bit.INTx8 = 1;
+  PieCtrlRegs.PIEIER3.bit.INTx7 = 1;
+  PieCtrlRegs.PIEIER3.bit.INTx8 = 1;
   EINT; // Enable Global interrupt INTM
   ERTM; // Enable Global realtime interrupt DBGM
 

@@ -157,8 +157,8 @@ void InitPWM7() {
   EPwm7Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
 
   // Set Compare values
-  EPwm7Regs.CMPA.half.CMPA = 500; // Set compare A value
-  EPwm7Regs.CMPB = 500;           // Set Compare B value
+  EPwm7Regs.CMPA.half.CMPA = 2250; // Set compare A value
+  EPwm7Regs.CMPB = 2500;           // Set Compare B value
 
   // Set actions
   // EPwm6Regs.AQCTLA.bit.ZRO = AQ_SET;            // Set PWM1A on Zero
@@ -307,30 +307,30 @@ __interrupt void epwm6_timer_isr(void) {
   PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 }
 
-// __interrupt void epwm7_timer_isr(void) {
-//   EPwm7TimerIntCount++;
+__interrupt void epwm7_timer_isr(void) {
+  EPwm7TimerIntCount++;
 
-//   //
-//   // Clear INT flag for this timer
-//   //
-//   EPwm7Regs.ETCLR.bit.INT = 1;
+  //
+  // Clear INT flag for this timer
+  //
+  EPwm7Regs.ETCLR.bit.INT = 1;
 
-//   //
-//   // Acknowledge this interrupt to receive more interrupts from group 3
-//   //
-//   PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
-// }
+  //
+  // Acknowledge this interrupt to receive more interrupts from group 3
+  //
+  PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+}
 
-// __interrupt void epwm8_timer_isr(void) {
-//   EPwm8TimerIntCount++;
+__interrupt void epwm8_timer_isr(void) {
+  EPwm8TimerIntCount++;
 
-//   //
-//   // Clear INT flag for this timer
-//   //
-//   EPwm8Regs.ETCLR.bit.INT = 1;
+  //
+  // Clear INT flag for this timer
+  //
+  EPwm8Regs.ETCLR.bit.INT = 1;
 
-//   //
-//   // Acknowledge this interrupt to receive more interrupts from group 3
-//   //
-//   PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
-// }
+  //
+  // Acknowledge this interrupt to receive more interrupts from group 3
+  //
+  PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+}
