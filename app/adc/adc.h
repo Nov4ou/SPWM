@@ -11,7 +11,7 @@
 #include "F2806x_Device.h"          // F2806x Headerfile
 #include "F2806x_Examples.h"        // F2806x Examples Headerfile
 
-#define GRAPH_MAX 25
+#define GRAPH_MAX 50
 
 void ADC_Init();
 __interrupt void adc_isr(void);

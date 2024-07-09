@@ -5,6 +5,7 @@
  *      Author: nov4ou
  */
 #include "F2806x_Device.h"   // F2806x Headerfile
+#include "F2806x_EPwm.h"
 #include "F2806x_Examples.h" // F2806x Examples Headerfile
 #include "adc.h"
 #include "epwm.h"
@@ -23,6 +24,7 @@ extern float sinAmp;
 extern float currentGraph[GRAPH_MAX];
 
 float i_ref = 0.75;
+float i_ref_rt;
 float i_max = -10;
 float i_rms = 0;
 
@@ -30,6 +32,8 @@ extern float Vol1;
 extern float Vol2;
 extern float Vol3;
 extern float Current;
+
+
 
 typedef struct {
   float kp, ki, kd;
@@ -91,8 +95,8 @@ int main() {
   EINT; // Enable Global interrupt INTM
   ERTM; // Enable Global realtime interrupt DBGM
 
-  PID_Init(&currentLoop, 0.01, 0.01, 0, 10, 10);
-  TIM0_Init(90, 100); // 10khz
+  PID_Init(&currentLoop, 0.1, 0.01, 0, 1, 5);
+  TIM0_Init(90, 10000); // 0.1khz
 
   while (1) {
     //
@@ -134,22 +138,36 @@ void PID_Calc(PID *pid, float reference, float feedback) {
 
 interrupt void TIM0_IRQn(void) {
   EALLOW;
-  Uint8 i = 0;
-  i_max = -10;
-  for (i = 0; i < GRAPH_MAX; i++) {
-    if (currentGraph[i] > i_max)
-    i_max = currentGraph[i];
-  }
-  i_rms = i_max / 1.41421356;
+  // Uint8 i = 0;
+  // i_max = -10;
+  // for (i = 0; i < GRAPH_MAX; i++) {
+  //   if (currentGraph[i] > i_max)
+  //   i_max = currentGraph[i];
+  // }
+  // i_rms = i_max / 1.41421356;
 
-  PID_Calc(&currentLoop, i_ref, i_rms);
-  // sinAmp = 0.5 + currentLoop.output / 10;
-  sinAmp = 1;
 
-  if (sinAmp < 0.2)
-    sinAmp = 0.2;
-  if (sinAmp > 1)
-    sinAmp = 1;
+  // PID_Calc(&currentLoop, i_ref_rt, Current);
+  // sineWave += (i_ref_rt - Current) * 3;
+  // sineWave2 = sineWave / 30 * 0.5;
+
+  // sineWave3 = -sineWave2;
+
+  // sineWave2 += 0.5;
+  // sineWave3 += 0.5;
+
+  // EPwm5Regs.CMPA.half.CMPA = sineWave2;
+  // EPwm6Regs.CMPA.half.CMPA = sineWave3;
+
+  
+
+  // sinAmp = 0.5 + currentLoop.output;
+  // // sinAmp = 1;
+
+  // if (sinAmp < 0.2)
+  //   sinAmp = 0.2;
+  // if (sinAmp > 1)
+  //   sinAmp = 1;
 
   PieCtrlRegs.PIEACK.bit.ACK1 = 1;
   EDIS;
