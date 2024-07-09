@@ -158,7 +158,7 @@ void InitPWM7() {
 
   // Set Compare values
   EPwm7Regs.CMPA.half.CMPA = 2250; // Set compare A value
-  EPwm7Regs.CMPB = 2500;           // Set Compare B value
+  EPwm7Regs.CMPB = 2250;           // Set Compare B value
 
   // Set actions
   // EPwm6Regs.AQCTLA.bit.ZRO = AQ_SET;            // Set PWM1A on Zero
@@ -213,8 +213,8 @@ void InitPWM8() {
   EPwm8Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
 
   // Set Compare values
-  EPwm8Regs.CMPA.half.CMPA = 500; // Set compare A value
-  EPwm8Regs.CMPB = 500;           // Set Compare B value
+  EPwm8Regs.CMPA.half.CMPA = 2250; // Set compare A value
+  EPwm8Regs.CMPB = 2250;           // Set Compare B value
 
   // Set actions
   // EPwm6Regs.AQCTLA.bit.ZRO = AQ_SET;            // Set PWM1A on Zero
