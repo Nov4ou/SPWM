@@ -83,6 +83,52 @@
                             <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.hex.1464703843" name="C2000 Hex Utility" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.hex"/>
                         </toolChain>
                     </folderInfo>
+                    <fileInfo id="com.ti.ccstudio.buildDefinitions.C2000.Debug.70254112.app/timer/timer.c" name="timer.c" rcbsApplicability="disable" resourcePath="app/timer/timer.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.1296626187">
+                        <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.1296626187" name="C2000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334">
+                            <option id="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH.651815228" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH" valueType="includePath">
+                                <listOptionValue value="${PROJECT_ROOT}"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/timer"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/headers/include"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/common/include"/>
+                                <listOptionValue value="${CG_TOOL_ROOT}/include"/>
+                            </option>
+                        </tool>
+                    </fileInfo>
+                    <fileInfo id="com.ti.ccstudio.buildDefinitions.C2000.Debug.70254112.app/iic/iic.c" name="iic.c" rcbsApplicability="disable" resourcePath="app/iic/iic.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.1150739979">
+                        <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.1150739979" name="C2000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334">
+                            <option id="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH.288979378" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH" valueType="includePath">
+                                <listOptionValue value="${PROJECT_ROOT}"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/iic"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/headers/include"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/common/include"/>
+                                <listOptionValue value="${CG_TOOL_ROOT}/include"/>
+                            </option>
+                        </tool>
+                    </fileInfo>
+                    <fileInfo id="com.ti.ccstudio.buildDefinitions.C2000.Debug.70254112.app/spwm/spwm.c" name="spwm.c" rcbsApplicability="disable" resourcePath="app/spwm/spwm.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.1744107905">
+                        <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.1744107905" name="C2000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334">
+                            <option id="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH.365790786" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH" valueType="includePath">
+                                <listOptionValue value="${PROJECT_ROOT}"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/spwm"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/epwm"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/headers/include"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/common/include"/>
+                                <listOptionValue value="${CG_TOOL_ROOT}/include"/>
+                            </option>
+                        </tool>
+                    </fileInfo>
+                    <fileInfo id="com.ti.ccstudio.buildDefinitions.C2000.Debug.70254112.app/ina238/ina238.c" name="ina238.c" rcbsApplicability="disable" resourcePath="app/ina238/ina238.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.138364527">
+                        <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.138364527" name="C2000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334">
+                            <option id="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH.554331511" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH" valueType="includePath">
+                                <listOptionValue value="${PROJECT_ROOT}"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/ina238"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/Examples/SPWM/app/iic"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/headers/include"/>
+                                <listOptionValue value="/Users/nov4ou/workspace_v12/f2806x/common/include"/>
+                                <listOptionValue value="${CG_TOOL_ROOT}/include"/>
+                            </option>
+                        </tool>
+                    </fileInfo>
                     <fileInfo id="com.ti.ccstudio.buildDefinitions.C2000.Debug.70254112.user/main.c" name="main.c" rcbsApplicability="disable" resourcePath="user/main.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.2142312935">
                         <tool id="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334.2142312935" name="C2000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.exe.compilerDebug.2118819334">
                             <option id="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH.1908008578" superClass="com.ti.ccstudio.buildDefinitions.C2000_22.6.compilerID.INCLUDE_PATH" valueType="includePath">
