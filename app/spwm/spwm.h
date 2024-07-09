@@ -18,6 +18,7 @@
 #define MAX_CMPA 4500  // Maximum value for CMPA, should be same as TBPRD
 #define PI 3.14159265358979
 
+
 void InitPWM5();
 void InitPWM6();
 void InitPWM7();

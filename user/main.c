@@ -14,6 +14,8 @@
 #include "stdio.h"
 #include "timer.h"
 
+extern float rectifier_dutycycle;
+
 void LED_Init(void) {
   EALLOW;
   //    SysCtrlRegs.PCLKCR3.bit.GPIOINENCLK = 1;
@@ -41,7 +43,7 @@ int main() {
 
   EALLOW;
   PieVectTable.EPWM5_INT = &epwm5_timer_isr;
-  PieVectTable.EPWM6_INT = &epwm6_timer_isr;
+  // PieVectTable.EPWM6_INT = &epwm6_timer_isr;
   PieVectTable.EPWM7_INT = &epwm7_timer_isr;
   PieVectTable.EPWM8_INT = &epwm8_timer_isr;
   EDIS;
@@ -50,11 +52,17 @@ int main() {
   LED_Init();
   InitPWM5();
   InitPWM6();
-  InitPWM7();
   InitPWM8();
+  InitPWM7();
+
+  EALLOW;
+  SysCtrlRegs.PCLKCR1.bit.EPWM7ENCLK = 1; // ePWM7
+  SysCtrlRegs.PCLKCR1.bit.EPWM8ENCLK = 1; // ePWM8
+  EDIS;
+
   IER |= M_INT3;
   PieCtrlRegs.PIEIER3.bit.INTx5 = 1;
-  PieCtrlRegs.PIEIER3.bit.INTx6 = 1;
+  // PieCtrlRegs.PIEIER3.bit.INTx6 = 1;
   PieCtrlRegs.PIEIER3.bit.INTx7 = 1;
   PieCtrlRegs.PIEIER3.bit.INTx8 = 1;
   EINT; // Enable Global interrupt INTM
@@ -64,7 +72,8 @@ int main() {
 
   // only in test
   while (1) {
-    //f
+
+    // f
     // dasfdasfdsafdsafads/f\fas
   }
 }

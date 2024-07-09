@@ -286,8 +286,8 @@ InitEPwm7Gpio(void)
     // This will enable the pullups for the specified pins.
     // Comment out other unwanted lines.
     //
-    //GpioCtrlRegs.GPAPUD.bit.GPIO30 = 1; // Disable pull-up on GPIO30 (EPWM7A)
-    GpioCtrlRegs.GPBPUD.bit.GPIO40 = 1;   // Disable pull-up on GPIO40 (EPWM7A)
+    GpioCtrlRegs.GPAPUD.bit.GPIO30 = 1; // Disable pull-up on GPIO30 (EPWM7A)
+    // GpioCtrlRegs.GPBPUD.bit.GPIO40 = 1;   // Disable pull-up on GPIO40 (EPWM7A)
     //GpioCtrlRegs.GPBPUD.bit.GPIO58 = 1; // Disable pull-up on GPIO58 (EPWM7A)
 
     GpioCtrlRegs.GPBPUD.bit.GPIO41 = 1;   // Disable pull-up on GPIO41 (EPWM7B)
@@ -299,8 +299,8 @@ InitEPwm7Gpio(void)
     // pins.
     // Comment out other unwanted lines.
     //
-    //GpioCtrlRegs.GPAMUX2.bit.GPIO30 = 3;   // Configure GPIO30 as EPWM7A
-    GpioCtrlRegs.GPBMUX1.bit.GPIO40 = 1;   // Configure GPIO40 as EPWM7A
+    GpioCtrlRegs.GPAMUX2.bit.GPIO30 = 3;   // Configure GPIO30 as EPWM7A
+    // GpioCtrlRegs.GPBMUX1.bit.GPIO40 = 1;   // Configure GPIO40 as EPWM7A
     //GpioCtrlRegs.GPBMUX2.bit.GPIO58 = 3;   // Configure GPIO58 as EPWM7A
 
     GpioCtrlRegs.GPBMUX1.bit.GPIO41 = 1;   // Configure GPIO41 as EPWM7B
@@ -326,8 +326,8 @@ InitEPwm8Gpio(void)
     // This will enable the pullups for the specified pins.
     // Comment out other unwanted lines.
     //
-    //GpioCtrlRegs.GPAPUD.bit.GPIO31 = 1; // Disable pull-up on GPIO30 (EPWM8A)
-    GpioCtrlRegs.GPBPUD.bit.GPIO42 = 1;   // Disable pull-up on GPIO42 (EPWM8A)
+    GpioCtrlRegs.GPAPUD.bit.GPIO31 = 1; // Disable pull-up on GPIO30 (EPWM8A)
+    // GpioCtrlRegs.GPBPUD.bit.GPIO42 = 1;   // Disable pull-up on GPIO42 (EPWM8A)
     GpioCtrlRegs.GPBPUD.bit.GPIO43 = 1;   // Disable pull-up on GPIO43 (EPWM8B)
 
     //
@@ -336,8 +336,8 @@ InitEPwm8Gpio(void)
     // pins.
     // Comment out other unwanted lines.
     //
-    //GpioCtrlRegs.GPAMUX2.bit.GPIO31 = 3;   // Configure GPIO30 as EPWM8A
-    GpioCtrlRegs.GPBMUX1.bit.GPIO42 = 1;   // Configure GPIO42 as EPWM8A
+    GpioCtrlRegs.GPAMUX2.bit.GPIO31 = 3;   // Configure GPIO30 as EPWM8A
+    // GpioCtrlRegs.GPBMUX1.bit.GPIO42 = 1;   // Configure GPIO42 as EPWM8A
     GpioCtrlRegs.GPBMUX1.bit.GPIO43 = 1;   // Configure GPIO43 as EPWM8B
 
     EDIS;

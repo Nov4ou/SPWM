@@ -15,6 +15,8 @@ Uint32 EPwm8TimerIntCount = 0;
 Uint16 sineValue = 0;
 Uint16 sineValue2 = 0;
 
+Uint16 rectifier_dutycycle = 1000;
+
 void InitPWM5() {
   EALLOW;
   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;  // Disable TBCLK within the ePWM
@@ -157,8 +159,8 @@ void InitPWM7() {
   EPwm7Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
 
   // Set Compare values
-  EPwm7Regs.CMPA.half.CMPA = 2250; // Set compare A value
-  EPwm7Regs.CMPB = 2250;           // Set Compare B value
+  EPwm7Regs.CMPA.half.CMPA = rectifier_dutycycle; // Set compare A value
+  EPwm7Regs.CMPB = rectifier_dutycycle;           // Set Compare B value
 
   // Set actions
   // EPwm6Regs.AQCTLA.bit.ZRO = AQ_SET;            // Set PWM1A on Zero
@@ -180,6 +182,7 @@ void InitPWM7() {
 
   EALLOW;
   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // Start all the timers synced
+  SysCtrlRegs.PCLKCR1.bit.EPWM7ENCLK = 0; // Disable ePWM7 clock and start at the same time.
   EDIS;
 }
 
@@ -213,8 +216,8 @@ void InitPWM8() {
   EPwm8Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
 
   // Set Compare values
-  EPwm8Regs.CMPA.half.CMPA = 2250; // Set compare A value
-  EPwm8Regs.CMPB = 2250;           // Set Compare B value
+  EPwm8Regs.CMPA.half.CMPA = rectifier_dutycycle; // Set compare A value
+  EPwm8Regs.CMPB = rectifier_dutycycle;           // Set Compare B value
 
   // Set actions
   // EPwm6Regs.AQCTLA.bit.ZRO = AQ_SET;            // Set PWM1A on Zero
@@ -236,6 +239,7 @@ void InitPWM8() {
 
   EALLOW;
   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // Start all the timers synced
+   SysCtrlRegs.PCLKCR1.bit.EPWM8ENCLK = 0; // Disable ePWM8 clock and start at the same time.
   EDIS;
 }
 
@@ -252,13 +256,14 @@ __interrupt void epwm5_timer_isr(void) {
   static const float step = 2 * PI * SINE_FREQ / PWM_FREQ;
 
   // Calculate the current sine wave value
-  if (sin(step * index) >= 0)
-    sineValue = (Uint16)(MAX_CMPA * sin(step * index));
-  else
-    sineValue = MAX_CMPA - (Uint16)(MAX_CMPA * fabs(sin(step * index)));
+  sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index)));
+
+  sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index)));
 
   // Update the duty cycle with the sine wave value
   EPwm5Regs.CMPA.half.CMPA = sineValue;
+
+  EPwm6Regs.CMPA.half.CMPA = sineValue2;
 
   // Increment the index and wrap around if necessary
   index++;
@@ -277,39 +282,42 @@ __interrupt void epwm5_timer_isr(void) {
   PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 }
 
-__interrupt void epwm6_timer_isr(void) {
-  EPwm6TimerIntCount++;
-  static Uint16 index2 = 0;
-  static const float step2 = 2 * PI * SINE_FREQ / PWM_FREQ;
+// __interrupt void epwm6_timer_isr(void) {
+//   EPwm6TimerIntCount++;
+//   static Uint16 index2 = 0;
+//   static const float step2 = 2 * PI * SINE_FREQ / PWM_FREQ;
 
-  // Calculate the current sine wave value
-  if (sin(step2 * index2) >= 0)
-    sineValue2 = MAX_CMPA;
-  else
-    sineValue2 = 0;
+//   // Calculate the current sine wave value
+//   if (sin(step2 * index2) >= 0)
+//     sineValue2 = MAX_CMPA;
+//   else
+//     sineValue2 = 0;
 
-  // Update the duty cycle with the sine wave value
-  EPwm6Regs.CMPA.half.CMPA = sineValue2;
+//   // Update the duty cycle with the sine wave value
+//   EPwm6Regs.CMPA.half.CMPA = sineValue2;
 
-  // Increment the index and wrap around if necessary
-  index2++;
-  if (index2 >= (PWM_FREQ / SINE_FREQ)) {
-    index2 = 0;
-  }
-  //
-  // Clear INT flag for this timer
-  //
-  EPwm6Regs.ETCLR.bit.INT = 1;
+//   // Increment the index and wrap around if necessary
+//   index2++;
+//   if (index2 >= (PWM_FREQ / SINE_FREQ)) {
+//     index2 = 0;
+//   }
+//   //
+//   // Clear INT flag for this timer
+//   //
+//   EPwm6Regs.ETCLR.bit.INT = 1;
 
-  //
-  // Acknowledge this interrupt to receive more interrupts from group 3
-  //
-  PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
-}
+//   //
+//   // Acknowledge this interrupt to receive more interrupts from group 3
+//   //
+//   PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+// }
 
 __interrupt void epwm7_timer_isr(void) {
   EPwm7TimerIntCount++;
 
+  // Set Compare values
+  EPwm7Regs.CMPA.half.CMPA = rectifier_dutycycle; // Set compare A value
+  EPwm7Regs.CMPB = rectifier_dutycycle;           // Set Compare B value
   //
   // Clear INT flag for this timer
   //
@@ -323,6 +331,10 @@ __interrupt void epwm7_timer_isr(void) {
 
 __interrupt void epwm8_timer_isr(void) {
   EPwm8TimerIntCount++;
+
+  // Set Compare values
+  EPwm8Regs.CMPA.half.CMPA = rectifier_dutycycle; // Set compare A value
+  EPwm8Regs.CMPB = rectifier_dutycycle;           // Set Compare B value
 
   //
   // Clear INT flag for this timer
