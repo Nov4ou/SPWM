@@ -13,6 +13,7 @@ Uint32 EPwm6TimerIntCount = 0;
 Uint16 sineValue = 0;
 Uint16 sineValue2 = 0;
 
+float sinout;
 Uint8 deadBandA1 = 80;
 Uint8 deadBandA2 = 80;
 Uint8 deadBandB1 = 80;
@@ -92,6 +93,7 @@ void InitPWM5() {
 
   EALLOW;
   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // Start all the timers synced
+  SysCtrlRegs.PCLKCR1.bit.EPWM5ENCLK = 0; // ePWM5
   EDIS;
 }
 
@@ -148,6 +150,7 @@ void InitPWM6() {
 
   EALLOW;
   SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // Start all the timers synced
+  SysCtrlRegs.PCLKCR1.bit.EPWM6ENCLK = 0; // ePWM6
   EDIS;
 }
 
@@ -158,28 +161,26 @@ __interrupt void epwm5_timer_isr(void) {
 
   i_ref_rt = sin(step * index) * i_ref * 1.41421356;
 
-    sineWave += (i_ref_rt - Current) * 3;
-  sineWave2 = sineWave / 30 * 0.5;
+  //   sineWave += (i_ref_rt - Current) * 3;
+  // sineWave2 = sineWave / 30 * 0.5;
 
-  sineWave3 = -sineWave2;
+  // sineWave3 = -sineWave2;
 
-  sineWave2 += 0.5;
-  sineWave3 += 0.5;
+  // sineWave2 += 0.5;
+  // sineWave3 += 0.5;
 
-  if (sineWave2 < 0)
-    sineWave2 = 0;
-  if (sineWave2 > 4500)
-    sineWave2 = 4500;
-  if (sineWave2 < 0)
-    sineWave2 = 0;
-  if (sineWave2 > 4500)
-    sineWave2 = 4500;
-  EPwm5Regs.CMPA.half.CMPA = (Uint16) sineWave2;
-  EPwm6Regs.CMPA.half.CMPA = (Uint16) sineWave3;
-
+  // if (sineWave2 < 0)
+  //   sineWave2 = 0;
+  // if (sineWave2 > 4500)
+  //   sineWave2 = 4500;
+  // if (sineWave2 < 0)
+  //   sineWave2 = 0;
+  // if (sineWave2 > 4500)
+  //   sineWave2 = 4500;
+  // EPwm5Regs.CMPA.half.CMPA = (Uint16)sineWave2;
+  // EPwm6Regs.CMPA.half.CMPA = (Uint16)sineWave3;
 
   /************************** Open Loop ******************************/
-
   // // Calculate the current sine wave value
   // sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index) * sinAmp));
   // i_ref_rt = sin(step * index) * i_ref * 1.41421356;
@@ -191,22 +192,28 @@ __interrupt void epwm5_timer_isr(void) {
 
   // EPwm6Regs.CMPA.half.CMPA = sineValue2;
 
-  // Increment the index and wrap around if necessary
+  // // Increment the index and wrap around if necessary
   index++;
   if (index >= (PWM_FREQ / SINE_FREQ)) {
     index = 0;
   }
+  /************************** Open Loop ******************************/
 
   /*************************** Close Loop *****************************/
   // PID_Calc(&currentLoop, i_ref_rt, Current);
   // sineValue = (currentLoop.output + 0.5) * (MAX_CMPA / 2);
-  // // if (sineValue < 0)
-  // //   sinAmp = 0;
-  // if (sineValue > MAX_CMPA)
-  //   sineValue = MAX_CMPA;
-  
-  // EPwm5Regs.CMPA.half.CMPA = sineValue;
-  // EPwm6Regs.CMPA.half.CMPA = sineValue2;
+
+  sinout = (i_ref_rt - Current) * 40;
+
+  if (sinout < (-1 * MAX_CMPA / 2))
+    sinout = -MAX_CMPA / 2;
+  if (sinout > MAX_CMPA / 2)
+    sinout = MAX_CMPA / 2;
+
+  sinout += MAX_CMPA / 2;
+
+  EPwm5Regs.CMPA.half.CMPA = sinout;
+  EPwm6Regs.CMPA.half.CMPA = sinout;
 
   /*************************** Close Loop *****************************/
 
