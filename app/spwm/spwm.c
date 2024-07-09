@@ -22,6 +22,7 @@ Uint8 deadBandB2 = 80;
 float sineWave = 0;
 float sineWave2 = 0;
 float sineWave3 = 0;
+float error = 0;
 
 float sinAmp = 0.5;
 extern float i_ref;
@@ -203,7 +204,8 @@ __interrupt void epwm5_timer_isr(void) {
   // PID_Calc(&currentLoop, i_ref_rt, Current);
   // sineValue = (currentLoop.output + 0.5) * (MAX_CMPA / 2);
 
-  sinout = (i_ref_rt - Current) * 40;
+  error = i_ref_rt - Current;
+  sinout = error * 800;
 
   if (sinout < (-1 * MAX_CMPA / 2))
     sinout = -MAX_CMPA / 2;

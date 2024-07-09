@@ -89,8 +89,10 @@ int main() {
   LED_Init();
   InitPWM5();
   InitPWM6();
+  EALLOW;
   SysCtrlRegs.PCLKCR1.bit.EPWM5ENCLK = 1; // ePWM5
   SysCtrlRegs.PCLKCR1.bit.EPWM6ENCLK = 1; // ePWM6
+  EDIS;
   IER |= M_INT3;
   PieCtrlRegs.PIEIER3.bit.INTx5 = 1;
   // PieCtrlRegs.PIEIER3.bit.INTx6 = 1;
