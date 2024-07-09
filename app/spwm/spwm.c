@@ -24,7 +24,7 @@ float sineWave2 = 0;
 float sineWave3 = 0;
 float error = 0;
 
-float sinAmp = 0.5;
+float sinAmp = 2000;
 extern float i_ref;
 extern float i_ref_rt;
 extern float Current;
@@ -93,7 +93,7 @@ void InitPWM5() {
   EPwm5Regs.ETPS.bit.INTPRD = ET_1ST;       // Generate INT on 1st event
 
   EALLOW;
-  SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // Start all the timers synced
+  SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;  // Start all the timers synced
   SysCtrlRegs.PCLKCR1.bit.EPWM5ENCLK = 0; // ePWM5
   EDIS;
 }
@@ -150,7 +150,7 @@ void InitPWM6() {
   EPwm6Regs.ETPS.bit.INTPRD = ET_1ST;       // Generate INT on 1st event
 
   EALLOW;
-  SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1; // Start all the timers synced
+  SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;  // Start all the timers synced
   SysCtrlRegs.PCLKCR1.bit.EPWM6ENCLK = 0; // ePWM6
   EDIS;
 }
@@ -183,15 +183,20 @@ __interrupt void epwm5_timer_isr(void) {
 
   /************************** Open Loop ******************************/
   // Calculate the current sine wave value
-  sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index) * sinAmp));
-  i_ref_rt = sin(step * index) * i_ref * 1.41421356;
+  // i_ref_rt = (1 + sin(step * index) + 0.1 * sin(5 * step * index)) * i_ref * 1.41421356;
+  // i_ref_rt = (1 + sin(step * index)) * i_ref * 1.41421356;
+  // error = (i_ref_rt - Current) + i_ref * 1.41421356;
 
-  sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
+  // // sineValue = i_ref_rt * 2000;
+  // sineValue = error * 400;
+  // if (sineValue > 4499)
+  //   sineValue = 0;
+  // // sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
 
-  // Update the duty cycle with the sine wave value
-  EPwm5Regs.CMPA.half.CMPA = sineValue;
+  // // Update the duty cycle with the sine wave value
+  // EPwm5Regs.CMPA.half.CMPA = sineValue;
 
-  EPwm6Regs.CMPA.half.CMPA = sineValue2;
+  // EPwm6Regs.CMPA.half.CMPA = sineValue;
 
   // // Increment the index and wrap around if necessary
   index++;

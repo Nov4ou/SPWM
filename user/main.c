@@ -33,6 +33,8 @@ extern float Vol1;
 extern float Vol2;
 extern float Vol3;
 extern float Current;
+extern float error;
+extern float sineWave;
 
 typedef struct {
   float x_est; // Estimated state value
@@ -109,8 +111,8 @@ int main() {
   ERTM; // Enable Global realtime interrupt DBGM
 
   kalmanFilter_Init(&I_rms);
-  PID_Init(&currentLoop, 0.05, 0.01, 0, 1, 5);
-  TIM0_Init(90, 10000); // 0.1khz
+  // PID_Init(&currentLoop, 50, 0, 0, 1, 400);
+  TIM0_Init(90, 100); // 0.1khz
 
   while (1) {
     //
@@ -182,7 +184,19 @@ interrupt void TIM0_IRQn(void) {
   i_rms = i_max / 1.41421356;
   filtered_i_rms = kalman_filter(&I_rms, i_rms);
 
-  PID_Calc(&currentLoop, i_ref + 0.12, filtered_i_rms);
+  error =  1.5 + (i_ref_rt - Current) + i_ref * 1.41421356;
+
+  // sineValue = i_ref_rt * 2000;
+  sineWave = error * 500;
+  if (sineWave > 4499)
+    sineWave = 0;
+  // sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
+
+  // Update the duty cycle with the sine wave value
+  EPwm5Regs.CMPA.half.CMPA = sineWave;
+
+  EPwm6Regs.CMPA.half.CMPA = sineWave;
+  // PID_Calc(&currentLoop, i_ref_rt, Current);
   // sineWave += (i_ref_rt - Current) * 3;
   // sineWave2 = sineWave / 30 * 0.5;
 
@@ -194,13 +208,13 @@ interrupt void TIM0_IRQn(void) {
   // EPwm5Regs.CMPA.half.CMPA = sineWave2;
   // EPwm6Regs.CMPA.half.CMPA = sineWave3;
 
-  sinAmp = 0.5 + currentLoop.output;
-  // sinAmp = 0.5;
+  // sinAmp = 2000 + currentLoop.output;
+  // // sinAmp = 0.5;
 
-  if (sinAmp < 0.2)
-    sinAmp = 0.2;
-  if (sinAmp > 1)
-    sinAmp = 1;
+  // if (sinAmp < 100)
+  //   sinAmp = 100;
+  // if (sinAmp > 4000)
+  //   sinAmp = 1;
 
   PieCtrlRegs.PIEACK.bit.ACK1 = 1;
   EDIS;
