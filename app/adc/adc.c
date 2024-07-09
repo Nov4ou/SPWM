@@ -12,6 +12,9 @@ float Vol2 = 0;
 float Vol3 = 0;
 float Current = 0;
 
+float currentGraph[GRAPH_MAX];
+Uint8 indexTest = 0;
+
 void ADC_Init()
 {
     //
@@ -93,12 +96,14 @@ adc_isr(void)
     Voltage2[ConversionCount] = AdcResult.ADCRESULT1;
     Voltage3[ConversionCount] = AdcResult.ADCRESULT2;
 
-    Vol1 = Voltage1[ConversionCount] * 3.3 / 4096;
-    Vol2 = Voltage2[ConversionCount] * 3.3 / 4096;
+    Vol1 = Voltage1[ConversionCount] * 3.3 / 4095;
+    Vol2 = Voltage2[ConversionCount] * 3.3 / 4095;
     Vol3 = Voltage3[ConversionCount] * 3.3 / 4095;
 
-    solarVol = (Vol1 - 1.502) * 41.61;
-    Current = (Vol2 - 1.495) * 40.078 / 20;
+    Current = (Vol2 - 1.506) * 38.5956 / 20;
+    currentGraph[indexTest++] = Current;
+    if (indexTest >= GRAPH_MAX)
+      indexTest = 0;
     //
     // If 20 conversions have been logged, start over
     //
