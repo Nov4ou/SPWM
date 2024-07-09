@@ -182,16 +182,16 @@ __interrupt void epwm5_timer_isr(void) {
   // EPwm6Regs.CMPA.half.CMPA = (Uint16)sineWave3;
 
   /************************** Open Loop ******************************/
-  // // Calculate the current sine wave value
-  // sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index) * sinAmp));
-  // i_ref_rt = sin(step * index) * i_ref * 1.41421356;
+  // Calculate the current sine wave value
+  sineValue = (Uint16)((MAX_CMPA / 2) * (1 + sin(step * index) * sinAmp));
+  i_ref_rt = sin(step * index) * i_ref * 1.41421356;
 
-  // sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
+  sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
 
-  // // Update the duty cycle with the sine wave value
-  // EPwm5Regs.CMPA.half.CMPA = sineValue;
+  // Update the duty cycle with the sine wave value
+  EPwm5Regs.CMPA.half.CMPA = sineValue;
 
-  // EPwm6Regs.CMPA.half.CMPA = sineValue2;
+  EPwm6Regs.CMPA.half.CMPA = sineValue2;
 
   // // Increment the index and wrap around if necessary
   index++;
@@ -204,18 +204,18 @@ __interrupt void epwm5_timer_isr(void) {
   // PID_Calc(&currentLoop, i_ref_rt, Current);
   // sineValue = (currentLoop.output + 0.5) * (MAX_CMPA / 2);
 
-  error = i_ref_rt - Current;
-  sinout = error * 800;
+  // error = i_ref_rt - Current;
+  // sinout += error * 10;
 
-  if (sinout < (-1 * MAX_CMPA / 2))
-    sinout = -MAX_CMPA / 2;
-  if (sinout > MAX_CMPA / 2)
-    sinout = MAX_CMPA / 2;
+  // if (sinout > 2250)
+  //   sinout = MAX_CMPA;
+  // if (sinout < -2250)
+  //   sinout = 0;
 
-  sinout += MAX_CMPA / 2;
+  // sinout += 2250;
 
-  EPwm5Regs.CMPA.half.CMPA = sinout;
-  EPwm6Regs.CMPA.half.CMPA = sinout;
+  // EPwm5Regs.CMPA.half.CMPA = sinout;
+  // EPwm6Regs.CMPA.half.CMPA = sinout;
 
   /*************************** Close Loop *****************************/
 
