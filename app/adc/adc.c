@@ -81,7 +81,7 @@ void ADC_Init()
     EPwm1Regs.ETSEL.bit.SOCASEL = 4;        // Select SOC from CMPA on upcount
     EPwm1Regs.ETPS.bit.SOCAPRD  = 1;        // Generate pulse on 1st event
     EPwm1Regs.CMPA.half.CMPA    = 0x0080;   // Set compare A value
-    EPwm1Regs.TBPRD             = 0x1000;   // Set period for ePWM1
+    EPwm1Regs.TBPRD             = 0xC000;   // Set period for ePWM1
     // EPwm1Regs.TBPRD             = 4500;   // Set period for ePWM1
     EPwm1Regs.TBCTL.bit.CTRMODE = 0;        // count up and start
 
@@ -101,7 +101,7 @@ adc_isr(void)
     Vol2 = Voltage2[ConversionCount] * 3.3 / 4095;
     Vol3 = Voltage3[ConversionCount] * 3.3 / 4095;
 
-    Current = (Vol2 - 1.506) * 38.5956 / 20;
+    Current = (Vol2 - 1.510) * 39.87 / 20;
     currentGraph[indexTest++] = Current;
     if (indexTest >= GRAPH_MAX)
       indexTest = 0;

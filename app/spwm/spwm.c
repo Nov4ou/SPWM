@@ -23,7 +23,8 @@ float sineWave = 0;
 float sineWave2 = 0;
 float sineWave3 = 0;
 float error = 0;
-
+float biased_error = 0;
+float i_vpp = 0;
 float sinAmp = 2000;
 extern float i_ref;
 extern float i_ref_rt;
@@ -160,7 +161,8 @@ __interrupt void epwm5_timer_isr(void) {
   static Uint16 index = 0;
   static const float step = 2 * PI * SINE_FREQ / PWM_FREQ;
 
-  i_ref_rt = sin(step * index) * i_ref * 1.41421356;
+  
+  // i_ref_rt = sin(step * index) * i_vpp;
 
   //   sineWave += (i_ref_rt - Current) * 3;
   // sineWave2 = sineWave / 30 * 0.5;
@@ -184,19 +186,19 @@ __interrupt void epwm5_timer_isr(void) {
   /************************** Open Loop ******************************/
   // Calculate the current sine wave value
   // i_ref_rt = (1 + sin(step * index) + 0.1 * sin(5 * step * index)) * i_ref * 1.41421356;
-  // i_ref_rt = (1 + sin(step * index)) * i_ref * 1.41421356;
+  i_ref_rt = (1 + sin(step * index)) * i_vpp;
   // error = (i_ref_rt - Current) + i_ref * 1.41421356;
 
-  // // sineValue = i_ref_rt * 2000;
+  sineValue = (Uint16) (i_ref_rt * 2000);
   // sineValue = error * 400;
   // if (sineValue > 4499)
   //   sineValue = 0;
-  // // sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
+  // sineValue2 = (Uint16)((MAX_CMPA / 2) * (1 - sin(step * index) * sinAmp));
 
-  // // Update the duty cycle with the sine wave value
-  // EPwm5Regs.CMPA.half.CMPA = sineValue;
+  // Update the duty cycle with the sine wave value
+  EPwm5Regs.CMPA.half.CMPA = sineValue;
 
-  // EPwm6Regs.CMPA.half.CMPA = sineValue;
+  EPwm6Regs.CMPA.half.CMPA = sineValue;
 
   // // Increment the index and wrap around if necessary
   index++;
