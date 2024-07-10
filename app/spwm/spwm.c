@@ -15,7 +15,7 @@ Uint32 EPwm8TimerIntCount = 0;
 Uint16 sineValue = 0;
 Uint16 sineValue2 = 0;
 
-Uint16 rectifier_dutycycle = 1000;
+Uint16 rectifier_dutycycle = 2250;
 
 void InitPWM5() {
   EALLOW;
